@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFBarcodeScanner", "WPFBarcodeScanner.csproj", "{F55FBCFE-63BF-4875-AC67-A59D72FCDA11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F55FBCFE-63BF-4875-AC67-A59D72FCDA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F55FBCFE-63BF-4875-AC67-A59D72FCDA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F55FBCFE-63BF-4875-AC67-A59D72FCDA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F55FBCFE-63BF-4875-AC67-A59D72FCDA11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13B50E1E-1573-478E-B4DD-0AA50B4FAE4E}
+	EndGlobalSection
+EndGlobal

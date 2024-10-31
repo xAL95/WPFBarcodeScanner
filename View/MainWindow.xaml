@@ -1,0 +1,15 @@
+﻿<Window x:Class="WPFBarcodeScanner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFBarcodeScanner.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="850">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="412" Margin="10,10,0,0" VerticalAlignment="Top" Width="563" Source="{Binding ImageSource}"/>
+        <Button Content="Bild Laden..." HorizontalAlignment="Left" Margin="597,326,0,0" VerticalAlignment="Top" Height="95" Width="193" Command="{Binding LoadBarcodeImage}"/>
+        <TextBox HorizontalAlignment="Left" Margin="597,183,0,0" TextWrapping="Wrap" Text="{Binding BarcodeText}"  VerticalAlignment="Top" Width="193" Height="51"/>
+
+    </Grid>
+</Window>
