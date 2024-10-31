@@ -1,13 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WPFBarcodeScanner.Services.Command;
 using ZXing;
 using BarcodeReader = ZXing.Presentation.BarcodeReader;
-
+using BarcodeWriter = ZXing.Presentation.BarcodeWriter;
+using BarcodeWriterGeometry = ZXing.Presentation.BarcodeWriterGeometry;
 
 namespace WPFBarcodeScanner.ViewModel
 {
@@ -26,14 +30,26 @@ namespace WPFBarcodeScanner.ViewModel
 
         private readonly BarcodeReader barcodeReader;
 
+        private BarcodeFormat barcodeFormat;
 
-        private BitmapImage _imageSource;
-        public BitmapImage ImageSource
+        private BitmapImage _imageGeneratedBarcode;
+        public BitmapImage ImageGeneratedBarcode
         {
-            get => _imageSource;
+            get => _imageGeneratedBarcode;
             set
             {
-                _imageSource = value;
+                _imageGeneratedBarcode = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private BitmapImage _imageBarcode;
+        public BitmapImage ImageBarcode
+        {
+            get => _imageBarcode;
+            set
+            {
+                _imageBarcode = value;
                 OnPropertyChanged();
             }
         }
@@ -60,38 +76,77 @@ namespace WPFBarcodeScanner.ViewModel
         }
 
 
-        private void DecodeImageSource()
+        private void DecodeImageBarcode()
         {
-            if (ImageSource == null)
+            if (ImageBarcode == null)
             {
                 return;
             }
 
-            var result = barcodeReader.Decode(ImageSource);
+            var result = barcodeReader.Decode(ImageBarcode);
             if (result != null)
             {
                 BarcodeText = result.Text;
+
+                GenerateBarcodeImage(result.BarcodeFormat);
             }
             else
             {
                 BarcodeText = "ERROR";
             }
+
         }
 
 
         private void OnLoadBarcodeImage()
         {
-            // Open a file dialog to select an image
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // load and set image source
-                ImageSource = new BitmapImage(new Uri(openFileDialog.FileName));
+                ImageBarcode = new BitmapImage(new Uri(openFileDialog.FileName));
 
                 // decode barcode 
-                DecodeImageSource();
+                DecodeImageBarcode();
+            }
+        }
+
+        private void GenerateBarcodeImage(BarcodeFormat barcodeFormat)
+        {
+            var writer = new BarcodeWriter
+            {
+                Format = barcodeFormat,
+                Options = new ZXing.Common.EncodingOptions
+                {
+                    Height = 138,
+                    Width = 543,
+                    Margin = 0
+                }
+            };
+
+            var image = writer.Write(BarcodeText);
+            ImageGeneratedBarcode = ConvertWriteableBitmapToBitmapImage(image);
+        }
+
+        private BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap writeableBitmap)
+        {
+            // Initialize a memory stream to hold the image data
+            using (var memoryStream = new MemoryStream())
+            {
+                var pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(writeableBitmap));
+                pngEncoder.Save(memoryStream);
+
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+
+                return bitmapImage;
             }
         }
 

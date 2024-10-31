@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="850">
     <Grid>
-        <Image HorizontalAlignment="Left" Height="412" Margin="10,10,0,0" VerticalAlignment="Top" Width="563" Source="{Binding ImageSource}"/>
-        <Button Content="Bild Laden..." HorizontalAlignment="Left" Margin="597,326,0,0" VerticalAlignment="Top" Height="95" Width="193" Command="{Binding LoadBarcodeImage}"/>
-        <TextBox HorizontalAlignment="Left" Margin="597,183,0,0" TextWrapping="Wrap" Text="{Binding BarcodeText}"  VerticalAlignment="Top" Width="193" Height="51"/>
+        <Image HorizontalAlignment="Left" Height="302" Margin="10,10,0,0" VerticalAlignment="Top" Width="563" Source="{Binding ImageBarcode}"/>
+        <Button Content="Bild Laden..." HorizontalAlignment="Left" Margin="612,356,0,0" VerticalAlignment="Top" Height="95" Width="193" Command="{Binding LoadBarcodeImage}"/>
+        <TextBox HorizontalAlignment="Left" Margin="612,209,0,0" TextWrapping="Wrap" Text="{Binding BarcodeText}"  VerticalAlignment="Top" Width="193" Height="51"/>
+        <Image HorizontalAlignment="Left" Height="138" Margin="26,326,0,0" VerticalAlignment="Top" Width="543" Source="{Binding ImageGeneratedBarcode}"/>
 
     </Grid>
 </Window>
